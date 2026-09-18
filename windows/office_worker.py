@@ -492,4 +492,7 @@ def main(argv=None) -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    # Stable entrypoint used by bootstrap/transport; execute hardened implementation.
+    # When imported as `office_worker`, the legacy helpers above remain available.
+    from office_worker_hardened import main as hardened_main
+    raise SystemExit(hardened_main())

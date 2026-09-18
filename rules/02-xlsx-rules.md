@@ -9,20 +9,26 @@ Primary goals:
 - easy to navigate,
 - easy to understand,
 - visually restrained,
-- structurally consistent.
+- structurally consistent,
+- deterministic enough that repeated agent runs produce the same design.
+
+Formatting and workbook structure are part of correctness. A workbook that calculates but is visually inconsistent, clipped, or difficult to audit is not complete.
+
+For financial models, `config/financial-model-style.json` is the default machine-readable design system unless an approved template overrides it.
 
 ---
 
 ## 2. Default typography
 
 Unless an approved template requires otherwise:
-
 - Font: **Arial**
 - Standard cell font: **10 pt**
 - Small labels / dense schedules: **9 pt** where necessary
-- Important headings: 10–12 pt, bold
+- Important headings: **10–12 pt**, bold
 
 Avoid mixed fonts.
+
+Agents should use semantic styles rather than inventing visual properties ad hoc.
 
 ---
 
@@ -39,6 +45,10 @@ Typical order:
 6. Checks / Reconciliations
 7. Raw / source data
 8. Historical / archived support
+
+For integrated financial models, follow `rules/03-financial-modeling-rules.md`.
+
+Define the workbook map before writing formulas. Do not let sheet order emerge accidentally from the order in which code happens to create sheets.
 
 Do not add a Read Me or Executive Summary sheet automatically.
 
@@ -75,7 +85,7 @@ If an approved workbook already uses a good scheme, preserve it.
 ## 6. Gridlines
 
 For professionally formatted sheets:
-- hide gridlines where the formatting provides sufficient structure.
+- hide gridlines where formatting provides sufficient structure.
 
 Do not hide gridlines on raw-data sheets if they materially improve usability.
 
@@ -113,23 +123,33 @@ Check for:
 - `#DIV/0!`
 - `#NAME?`
 - `#N/A`
-- missing formulas
-- external links
-- inconsistent formulas
+- `#NUM!`
+- `#SPILL!`
+- `#CALC!`
+- missing formulas,
+- external links,
+- inconsistent formulas.
+
+Where formulas have been recalculated by Excel COM, validate both:
+1. the formula expression view (`data_only=False`), and
+2. the cached calculated-value view (`data_only=True`).
+
+For repeated forecast periods, normalized R1C1 formula patterns should normally be consistent.
 
 ---
 
 ## 9. Investment-banking-style formula colors
 
 Where appropriate and not overridden by a template:
-
 - Hardcoded inputs: blue font
 - Formulas: black font
-- Links to other sheets in the same workbook: black or template standard
+- Links to other sheets in the same workbook: black font unless the approved template uses another convention
 - Links to external workbooks: green font if intentionally retained
 - Warnings / unresolved exceptions: red only when necessary
 
 Do not use color as the only control.
+
+Formula colors should be applied from semantic formula type, not manually cell-by-cell without classification.
 
 ---
 
@@ -147,6 +167,8 @@ Default principles:
 - large values use appropriate `$`, `000s`, `mm`, or other disclosed unit conventions.
 
 Do not mix inconsistent formats within the same schedule.
+
+Use the semantic number-format definitions in `config/financial-model-style.json` for financial models unless the approved template overrides them.
 
 ---
 
@@ -180,9 +202,21 @@ Requirements:
 - no unnecessary wrapping,
 - no excessively wide columns,
 - no narrow columns that force awkward multi-line headings,
-- no row heights that truncate text.
+- no row heights that truncate text,
+- preserve intentional spacer columns,
+- preserve deliberate model widths/heights unless there is a visible defect.
 
-Autofit is a starting point, not a substitute for judgment.
+Native Excel AutoFit is a measurement tool, not a design system.
+
+When AutoFit is used:
+- prefer expand-only behavior,
+- do not shrink deliberate dimensions,
+- preserve hidden rows/columns,
+- preserve intentionally narrow spacer columns,
+- cap automatic expansion where appropriate,
+- render and visually inspect the result.
+
+Do not run blanket `UsedRange.Columns.AutoFit()` / `Rows.AutoFit()` and accept the result without review.
 
 ---
 
@@ -228,6 +262,8 @@ Where the workbook is meant to be printed or exported:
 - check scaling,
 - check page titles.
 
+Native Excel rendering is authoritative when available.
+
 ---
 
 ## 17. Hidden rows/columns/sheets
@@ -250,17 +286,55 @@ Charts should:
 - use readable labels,
 - avoid unnecessary legends,
 - avoid 3D effects,
-- use restrained formatting.
+- use restrained formatting,
+- use consistent dimensions and placement across comparable output sheets.
 
 Do not add charts merely to make a workbook look more polished.
 
+For high-quality deliverables, validate chart positioning through native Excel rendering.
+
 ---
 
-## 19. Final XLSX QA
+## 19. Existing-workbook preservation
+
+Before mutating an existing workbook, run OOXML feature preflight.
+
+If advanced/native features are present, such as:
+- ActiveX,
+- embedded objects,
+- slicers,
+- Power Query/query tables,
+- connections,
+- complex pivot structures,
+- VBA,
+- external links,
+
+prefer Excel COM or surgical OOXML instead of a routine `openpyxl` save cycle.
+
+When preservation matters, compare:
+- formulas and values,
+- styles and number formats,
+- merged ranges,
+- row heights and column widths,
+- hidden/outline state,
+- names,
+- tables,
+- validations,
+- conditional formatting,
+- chart inventory,
+- freeze panes,
+- tab colors,
+- gridlines,
+- print/page setup,
+- OOXML advanced-feature inventory.
+
+---
+
+## 20. Final XLSX QA
 
 Before delivery:
-- workbook opens correctly,
-- no formula errors,
+- workbook opens without repair warning,
+- no formula or calculated-value errors,
 - key formulas are intact,
 - formulas are consistent,
 - no unintended external links,
@@ -271,5 +345,9 @@ Before delivery:
 - widths/heights are appropriate,
 - no random borders,
 - no clipped text,
+- no awkward wrapping,
 - print/layout settings are reasonable,
-- final workbook is visually inspected where possible.
+- financial identity checks pass where applicable,
+- important sheets are rendered and visually inspected.
+
+If the task modifies a source workbook, the final comparison must distinguish intended changes from accidental mutations.
