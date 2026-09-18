@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "default_font": "Arial",
+  "engine_policy": {
+    "docx_editing": ["word-com", "python-docx", "ooxml", "libreoffice"],
+    "xlsx_editing": ["excel-com", "openpyxl", "ooxml", "libreoffice"],
+    "rendering": ["office-com", "libreoffice"],
+    "validation": ["python-ooxml", "office-com-state", "visual-review"],
+    "default_render_engine": "auto",
+    "com_preferred_when_available": true
+  },
+  "windows_runtime": {
+    "requirements": "requirements-windows.txt",
+    "bootstrap": "windows/bootstrap.ps1",
+    "worker": "windows/office_worker.py",
+    "bridge": "office_artifact_system/com_bridge.py"
+  },
+  "golden_examples": {
+    "docx": {
+      "path": "source-data/golden-examples/Golden - Accounting Manual.docx",
+      "sha256": "fe8fe3182c92036b9d6695dc534d372ffa55ae6666e7dd1a948a489e777c198a",
+      "required_in_repo": false
+    },
+    "xlsx_financial_model": {
+      "path": "source-data/golden-examples/Golden - Three Statement Financial Model.xlsx",
+      "sha256": "7c6a1a00ef989a2601753eeaefc78ce261ce54ea5335bb089055f739011e187c",
+      "required_in_repo": false
+    }
+  },
+  "skills": [
+    "accounting-artifacts",
+    "artifact-qa",
+    "docx-master",
+    "financial-modeling",
+    "office-artifact-router",
+    "xlsx-master"
+  ]
+}

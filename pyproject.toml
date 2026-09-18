@@ -1,0 +1,14 @@
+[project]
+name = "office-artifact-system"
+version = "0.1.0"
+description = "Deterministic DOCX/XLSX production and QA helpers for Codex."
+requires-python = ">=3.11"
+dependencies = [
+  "python-docx>=1.1,<2",
+  "openpyxl>=3.1,<4",
+  "lxml>=5,<7",
+  "Pillow>=10,<12",
+]
+
+[project.scripts]
+office-artifacts = "office_artifact_system.cli:main"
