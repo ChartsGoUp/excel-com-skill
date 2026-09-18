@@ -31,6 +31,12 @@ def main() -> int:
     if engine_policy.get("rendering", [None])[0] != "office-com":
         fail("rendering engine policy must prefer office-com")
 
+    style_cfg = json.loads((ROOT / "config" / "financial-model-style.json").read_text(encoding="utf-8"))
+    if style_cfg.get("font", {}).get("name") != "Arial":
+        fail("financial-model style must default to Arial")
+    if "hardcode_input" not in style_cfg.get("semantic_styles", {}):
+        fail("financial-model style is missing hardcode_input")
+
     missing_optional = []
     for name, meta in cfg["golden_examples"].items():
         path = ROOT / meta["path"]
@@ -55,14 +61,20 @@ def main() -> int:
         "rules/00-global-rules.md",
         "rules/01-docx-rules.md",
         "rules/02-xlsx-rules.md",
+        "rules/03-financial-modeling-rules.md",
         "rules/05-qa-checklist.md",
         "rules/10-native-office-com.md",
+        "config/financial-model-style.json",
         "office_artifact_system/cli.py",
         "office_artifact_system/com_bridge.py",
         "office_artifact_system/render.py",
+        "office_artifact_system/xlsx_ops.py",
+        "office_artifact_system/xlsx_style.py",
         "tools/office_artifacts.py",
         "tools/check_environment.py",
         "windows/office_worker.py",
+        "windows/office_worker_hardened.py",
+        "windows/desktop_transport.py",
         "windows/bootstrap.ps1",
         "requirements-windows.txt",
     ]
@@ -74,8 +86,12 @@ def main() -> int:
         ROOT / "office_artifact_system" / "cli.py",
         ROOT / "office_artifact_system" / "com_bridge.py",
         ROOT / "office_artifact_system" / "render.py",
+        ROOT / "office_artifact_system" / "xlsx_ops.py",
+        ROOT / "office_artifact_system" / "xlsx_style.py",
         ROOT / "tools" / "check_environment.py",
         ROOT / "windows" / "office_worker.py",
+        ROOT / "windows" / "office_worker_hardened.py",
+        ROOT / "windows" / "desktop_transport.py",
     ]
     for path in python_files:
         try:

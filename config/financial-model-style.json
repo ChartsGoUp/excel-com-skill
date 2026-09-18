@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "scope": "financial-models",
+  "font": {
+    "name": "Arial",
+    "body_pt": 10,
+    "dense_pt": 9,
+    "heading_max_pt": 12
+  },
+  "columns": {
+    "label_default": 32,
+    "unit_default": 10,
+    "period_default": 12,
+    "spacer_default": 2,
+    "statistic_default": 10,
+    "autofit_max_expansion_width": 45
+  },
+  "rows": {
+    "standard_height": 15,
+    "section_min_height": 18,
+    "autofit_max_expansion_height": 72
+  },
+  "views": {
+    "standard_zoom": 95,
+    "wide_model_zoom": 85,
+    "gridlines": false
+  },
+  "colors": {
+    "font": {
+      "formula": "000000",
+      "hardcode": "0000FF",
+      "external_link": "008000",
+      "warning": "C00000"
+    },
+    "fill": {
+      "section_header": "1F4E79",
+      "subsection_header": "D9EAF7",
+      "historical_header": "E7E6E6",
+      "forecast_header": "D9EAF7",
+      "input": "FFF2CC",
+      "check_pass": "E2F0D9",
+      "check_fail": "FCE4D6"
+    }
+  },
+  "semantic_styles": {
+    "section_header": {
+      "bold": true,
+      "font_color": "FFFFFF",
+      "fill": "1F4E79",
+      "align": "left"
+    },
+    "subsection_header": {
+      "bold": true,
+      "fill": "D9EAF7",
+      "align": "left"
+    },
+    "hardcode_input": {
+      "font_color": "0000FF",
+      "fill": "FFF2CC"
+    },
+    "same_sheet_formula": {
+      "font_color": "000000"
+    },
+    "cross_sheet_formula": {
+      "font_color": "000000"
+    },
+    "external_link_formula": {
+      "font_color": "008000"
+    },
+    "subtotal": {
+      "bold": true,
+      "top_border": "thin"
+    },
+    "major_total": {
+      "bold": true,
+      "top_border": "thin",
+      "bottom_border": "double"
+    },
+    "forecast_header": {
+      "bold": true,
+      "fill": "D9EAF7",
+      "align": "center"
+    },
+    "historical_header": {
+      "bold": true,
+      "fill": "E7E6E6",
+      "align": "center"
+    },
+    "check_pass": {
+      "bold": true,
+      "fill": "E2F0D9"
+    },
+    "check_fail": {
+      "bold": true,
+      "font_color": "C00000",
+      "fill": "FCE4D6"
+    }
+  },
+  "number_formats": {
+    "integer": "#,##0;(#,##0);-",
+    "decimal_1": "#,##0.0;(#,##0.0);-",
+    "percentage_1": "0.0%;(0.0%);-",
+    "multiple_1": "0.0x",
+    "currency_0": "$#,##0;($#,##0);-",
+    "currency_1": "$#,##0.0;($#,##0.0);-",
+    "days_0": "0",
+    "date": "mmm-yy"
+  },
+  "layout_rules": {
+    "preserve_intentional_spacer_columns": true,
+    "autofit_expand_only": true,
+    "do_not_box_every_cell": true,
+    "hide_gridlines_on_formatted_model_sheets": true,
+    "historical_forecast_boundary_required": true,
+    "visual_qa_required": true
+  }
+}

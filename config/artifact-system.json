@@ -1,18 +1,38 @@
 {
-  "version": 2,
+  "version": 3,
   "default_font": "Arial",
   "engine_policy": {
-    "docx_editing": ["word-com", "python-docx", "ooxml", "libreoffice"],
-    "xlsx_editing": ["excel-com", "openpyxl", "ooxml", "libreoffice"],
-    "rendering": ["office-com", "libreoffice"],
-    "validation": ["python-ooxml", "office-com-state", "visual-review"],
+    "docx_editing": [
+      "word-com",
+      "python-docx",
+      "ooxml",
+      "libreoffice"
+    ],
+    "xlsx_editing": [
+      "excel-com",
+      "openpyxl",
+      "ooxml",
+      "libreoffice"
+    ],
+    "rendering": [
+      "office-com",
+      "libreoffice"
+    ],
+    "validation": [
+      "python-ooxml",
+      "cached-values",
+      "office-com-state",
+      "visual-review"
+    ],
     "default_render_engine": "auto",
     "com_preferred_when_available": true
   },
+  "financial_model_style": "config/financial-model-style.json",
   "windows_runtime": {
     "requirements": "requirements-windows.txt",
     "bootstrap": "windows/bootstrap.ps1",
     "worker": "windows/office_worker.py",
+    "transport": "windows/desktop_transport.py",
     "bridge": "office_artifact_system/com_bridge.py"
   },
   "golden_examples": {
